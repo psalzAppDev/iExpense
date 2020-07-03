@@ -67,7 +67,7 @@ struct ContentView: View {
                         
                         Spacer()
                         
-                        Text("\(item.amount)")
+                        self.styledTextForAmount(item.amount)
                     }
                 }
                 .onDelete(perform: removeItems)
@@ -83,6 +83,26 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingAddExpense) {
             AddView(expenses: self.expenses)
+        }
+    }
+    
+    func styledTextForAmount(_ amount: Int) -> Text {
+        
+        let text = Text("\(amount)")
+        
+        switch amount {
+            
+        case ..<10:
+            return text.italic().foregroundColor(Color.blue)
+        
+        case 10..<100:
+            return text.bold().foregroundColor(Color.yellow)
+        
+        case 100...:
+            return text.underline().foregroundColor(Color.green)
+            
+        default:
+            return text
         }
     }
     
